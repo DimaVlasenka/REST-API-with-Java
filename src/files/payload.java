@@ -21,5 +21,13 @@ public class payload {
 				+ "  \"language\": \"Deuch-IN\"\r\n"
 				+ "}";
 	}
+	
+	public static String UpdatePlace(String placeId, String newAddress) {
+		return "{\r\n"
+				+ "\"place_id\":\""+ placeId +"\",\r\n"
+				+ "\"address\":\""+ newAddress +"\",\r\n"
+				+ "\"key\":\"qaclick123\"\r\n"
+				+ "}";		
+	}
 
 }
