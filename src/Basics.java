@@ -1,6 +1,9 @@
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import static org.hamcrest.Matchers.*; //package needed for equalTo() method
+
+import org.testng.Assert;
+
 import files.payload;
 import static io.restassured.RestAssured.*; //package needed for given() method
 
@@ -52,8 +55,9 @@ public class Basics {
 		
 		JsonPath jsGet = new JsonPath(getPlaceResponse);
 		String actualAddress = jsGet.getString("address");
-		
 		System.out.println(actualAddress);
+		Assert.assertEquals(actualAddress, newAddress);
+		
 	}
 
 }
