@@ -30,7 +30,8 @@ public class payload {
 				+ "}";		
 	}
 	
-	public static String CourcePrice() {
+	public static String CourcePrice() 
+	{
 		return "{\r\n"
 				+ "  \"dashboard\": {\r\n"
 				+ "    \"purchaseAmount\": 910,\r\n"
@@ -55,5 +56,17 @@ public class payload {
 				+ "  ]\r\n"
 				+ "}";
 	}
+	
+	public static String AddBook(String isbn, String aisle) 
+	{
+		 String bookBody = "{\r\n"
+				+ "\"name\":\"DV Test book\",\r\n"
+				+ "\"isbn\":\""+ isbn +"\",\r\n"
+				+ "\"aisle\":\""+ aisle +"\",\r\n"
+				+ "\"author\":\"Dima Vlas\"\r\n"
+				+ "}";
+				
+		return bookBody;
+	} 
 
 }
