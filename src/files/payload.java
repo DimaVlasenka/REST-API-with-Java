@@ -67,6 +67,22 @@ public class payload {
 				+ "}";
 				
 		return bookBody;
-	} 
+	}
+	
+	public static String AddJiraComment (String expectedComment) 
+	{
+		return "{\r\n"
+				+ "    \"body\": \""+expectedComment+"\",\r\n"
+				+ "    \"visibility\": {\r\n"
+				+ "        \"type\": \"role\",\r\n"
+				+ "        \"value\": \"Administrators\"\r\n"
+				+ "    }\r\n"
+				+ "}";
+	}
+
+	public static String JiraLogin() {
+		
+		return "{ \"username\": \"dmbelwood\", \"password\": \"159159\" }";
+	}
 
 }
