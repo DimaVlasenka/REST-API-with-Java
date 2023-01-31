@@ -1,0 +1,16 @@
+{
+  "location": {
+    "lat": -39.383494,
+    "lng": 34.427362
+  },
+  "accuracy": 50,
+  "name": "Dimona Practice",
+  "phone_number": "(+91) 555 983 893 3937",
+  "address": "299, side layout, cohen 09",
+  "types": [
+    "teaching park",
+    "shopping"
+  ],
+  "website": "http://google.com",
+  "language": "Polish-IN"
+}
