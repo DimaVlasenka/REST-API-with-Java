@@ -1,12 +1,23 @@
 import io.restassured.RestAssured;
+import io.restassured.parsing.Parser;
+
 import static io.restassured.RestAssured.*;
 import io.restassured.path.json.JsonPath;
+import pojo.Api;
+import pojo.GetCourses;
+import pojo.WebAutomation;
+
 import static org.hamcrest.Matchers.*;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 
 public class OAuthTest {
 
@@ -28,7 +39,7 @@ public class OAuthTest {
 		driver.findElement(By.cssSelector("input[type='password']")).sendKeys(myPassword);
 		driver.findElement(By.cssSelector("input[type='password']")).sendKeys(Keys.ENTER);
 		
-		Thread.sleep(4000);
+		Thread.sleep(2000);
 		
 		String currentURL = driver.getCurrentUrl();
 		
@@ -50,10 +61,51 @@ public class OAuthTest {
 		
 		//to get list of courses 
 		
-		String listCoursesResponse = given().queryParam("access_token", accessToken).
+		/*String listCoursesResponse = given().queryParam("access_token", accessToken).
 		when().log().all().get("https://rahulshettyacademy.com/getCourse.php").asString();
 		
-		System.out.println(listCoursesResponse);
+		System.out.println(listCoursesResponse);*/
+		
+		GetCourses mainObject = given().queryParam("access_token", accessToken).expect().defaultParser(Parser.JSON).
+				when().get("https://rahulshettyacademy.com/getCourse.php").as(GetCourses.class);
+		
+		System.out.println(mainObject.getInstructor());
+		System.out.println(mainObject.getLinkedIn());
+		
+		//Print title and price of "SoapUI Webservices testing"
+		String courseToFind = "SoapUI Webservices testing";
+		
+		List<Api> api = mainObject.getCourses().getApi();
+		
+		for(int i=0;i<api.size();i++) {
+			
+			if(api.get(i).getCourseTitle().equalsIgnoreCase(courseToFind)) {
+				System.out.println(api.get(i).getCourseTitle());
+				System.out.println(api.get(i).getPrice());
+				break;
+			}
+		}
+		
+		//Print all courses titles and prices from webAutomation
+		
+		List<WebAutomation> webAutomation = mainObject.getCourses().getWebAutomation();
+		for(int h = 0; h < webAutomation.size(); h++) {
+			System.out.println(webAutomation.get(h).getCourseTitle());
+			System.out.println(webAutomation.get(h).getPrice());
+			
+		//Compare WebAutomation courses with expected predefined list
+			String[] expectedCourses = {"Selenium Webdriver Java","Cypress", "Protractor"};
+			ArrayList<String> actualCourses = new ArrayList<String>();
+			
+			for (int j = 0; j < webAutomation.size(); j++) {
+				actualCourses.add(j, webAutomation.get(j).getCourseTitle());
+			}
+			
+			List<String> expectedList = Arrays.asList(expectedCourses);
+			
+			Assert.assertTrue(actualCourses.equals(expectedList));
+			
+		}
 		
 		driver.quit();
 		

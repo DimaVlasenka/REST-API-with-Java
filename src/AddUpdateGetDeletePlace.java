@@ -11,7 +11,7 @@ import org.testng.Assert;
 import files.payload;
 import static io.restassured.RestAssured.*; //package needed for given() method
 
-public class Basics {
+public class AddUpdateGetDeletePlace {
 
 	public static void main(String[] args) throws IOException {
 
