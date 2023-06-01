@@ -4,10 +4,14 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 import pojo.LoginRequest;
 import pojo.LoginResponse;
+import pojo.OrderDetails;
+import pojo.Orders;
 
 import static io.restassured.RestAssured.*;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ECommerceAPITest {
 
@@ -54,8 +58,29 @@ System.out.println(productID);
 
 	// URL to access UI part https://rahulshettyacademy.com/client "userEmail": "dima@gmail.com", "userPassword": "Dm_123456"
 	
-	
-	
+	//Create Order
+
+RequestSpecification reqCreateOrderBasic = new RequestSpecBuilder().setBaseUri("https://rahulshettyacademy.com").
+addHeader("Authorization", userToken).setContentType(ContentType.JSON).build();
+
+OrderDetails orderDetail = new OrderDetails();
+orderDetail.setCountry("Germany");
+orderDetail.setProductOrderedId(productID);
+
+List<OrderDetails> listOrderDetails = new ArrayList<OrderDetails>();
+listOrderDetails.add(orderDetail);
+
+Orders orders = new Orders();
+orders.setOrders(listOrderDetails);
+
+RequestSpecification reqCreateOrder = given().log().all().spec(reqCreateOrderBasic).body(orders);
+
+String createOrderResponse = reqCreateOrder.when().post("/api/ecom/order/create-order").
+then().log().all().extract().response().asString();
+
+
+
+
 	}
 
 }
